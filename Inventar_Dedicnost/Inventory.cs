@@ -13,7 +13,7 @@ namespace Inventar_Dedicnost
         public static Random rnd = new Random();
 
         public virtual void WriteInterface()  
-        {   
+        {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
