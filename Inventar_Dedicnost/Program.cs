@@ -64,7 +64,7 @@ namespace Inventar_Dedicnost
                         pageOfInventory[onPage]();
                         break;
                 }
-            }   
+            }
 
         }
 
