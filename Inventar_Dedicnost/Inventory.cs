@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace Inventar_Dedicnost
 {
     //Inventář - nazev, počet, cena/ks
@@ -9,10 +10,10 @@ namespace Inventar_Dedicnost
         protected int Price { set; get; }
         protected string PageOfInv { set; get; }
         public bool Highlight { get; set; } = false;
-        protected int[] posX = { 20, 32, 44, 65, 81};
+        protected int[] posX = { 20, 32, 44, 65, 81 };
         public static Random rnd = new Random();
 
-        public virtual void WriteInterface()  
+        public virtual void WriteHeader()
         {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
@@ -29,6 +30,14 @@ namespace Inventar_Dedicnost
             Console.Write("Cena");
         }
 
+        public static void WriteFooter()
+        {
+            Console.SetCursorPosition(0, Console.CursorTop + 2);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Použít - Q               Vyhodit - X             Najít náhodný předmět - E");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public virtual void WriteItem()
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -41,6 +50,13 @@ namespace Inventar_Dedicnost
             Console.SetCursorPosition(posX[1], Console.CursorTop);
             Console.Write(Price);
         }
+
+        public virtual List<Inventory> StartingItems()
+        {
+            List<Inventory> start = new List<Inventory>();
+            return start;
+        }
+
 
         public Inventory(string name, int count, int price, bool highlight)
         {

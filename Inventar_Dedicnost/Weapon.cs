@@ -17,10 +17,10 @@ namespace Inventar_Dedicnost
             this.AttributeNeeded = attributeNeeded;
 
         }
-        public override void WriteInterface()
+        public override void WriteHeader()
         {
             PageOfInv = "Zbraně";
-            base.WriteInterface();
+            base.WriteHeader();
             Console.SetCursorPosition(posX[2], Console.CursorTop);
             Console.Write("Typ");
             Console.SetCursorPosition(posX[3], Console.CursorTop);
@@ -70,9 +70,9 @@ namespace Inventar_Dedicnost
             return AllWeapon()[rnd.Next(AllWeapon().Count)];
         }
 
-        public List<Weapon> StartWeapons()
+        public override List<Inventory> StartingItems()
         {
-            List<Weapon> start = new List<Weapon>();
+            List<Inventory> start = new List<Inventory>();
             if (rnd.Next(10) == 5)
                 start.Add(AllWeapon()[1]);
             else

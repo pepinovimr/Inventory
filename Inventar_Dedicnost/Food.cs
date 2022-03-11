@@ -16,10 +16,10 @@ namespace Inventar_Dedicnost
             this.AddMP = addMP;
         }
 
-        public override void WriteInterface()
+        public override void WriteHeader()
         {
             PageOfInv = "Jídlo";
-            base.WriteInterface();
+            base.WriteHeader();
             Console.SetCursorPosition(posX[2], Console.CursorTop);
             Console.Write("Lečení života");
             Console.SetCursorPosition(posX[3], Console.CursorTop);
@@ -64,10 +64,9 @@ namespace Inventar_Dedicnost
         {
             return AllFood()[rnd.Next(AllFood().Count)];
         }
-
-        public List<Food> StartFood()
+        public override List<Inventory> StartingItems()
         {
-            List<Food> start = new List<Food>();
+            List<Inventory> start = new List<Inventory>();
             if (rnd.Next(10) == 5)
                 start.Add(AllFood()[1]);
             else
@@ -80,6 +79,5 @@ namespace Inventar_Dedicnost
 
             return start;
         }
-
     }
 }
