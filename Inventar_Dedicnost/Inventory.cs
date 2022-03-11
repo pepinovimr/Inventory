@@ -12,7 +12,7 @@ namespace Inventar_Dedicnost
         protected int[] posX = { 20, 32, 44, 65, 81};
         public static Random rnd = new Random();
 
-        public virtual void WriteInterface()
+        public virtual void WriteInterface()  
         {   
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
