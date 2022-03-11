@@ -5,7 +5,7 @@ namespace Inventar_Dedicnost
     internal class Inventory
     {
         protected string Name { set; get; }
-        protected int Count { set; get; }
+        protected int Quantity { set; get; }
         protected int Price { set; get; }
         protected string PageOfInv { set; get; }
         public bool Highlight { get; set; } = false;
@@ -37,7 +37,7 @@ namespace Inventar_Dedicnost
                 Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(Name);
             Console.SetCursorPosition(posX[0], Console.CursorTop);
-            Console.Write(Count);
+            Console.Write(Quantity);
             Console.SetCursorPosition(posX[1], Console.CursorTop);
             Console.Write(Price);
         }
@@ -45,7 +45,7 @@ namespace Inventar_Dedicnost
         public Inventory(string name, int count, int price, bool highlight)
         {
             this.Name = name;
-            this.Count = count;
+            this.Quantity = count;
             this.Price = price;
             this.Highlight = highlight;
         }

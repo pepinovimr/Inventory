@@ -18,9 +18,7 @@ namespace Inventar_Dedicnost
         static void Main(string[] args)
         {
             weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartWeapons());
-            foodList.Add(new Food("Borůvky", 2, 1, 10, 0, 20));
-            foodList.Add(new Food("Voda", 1, 5, 15, 5, 20));
-            foodList.Add(new Food("Neco", 1, 5, 15, 5, 20));
+            foodList.AddRange(new Food("starting food", 1, 1, 0, 0, 0).StartFood());
             pageOfInventory.Add(1, InventoryWeapons);
             pageOfInventory.Add(2, InventoryFood);
             test.Add(1, weaponList.Count-1);
@@ -52,8 +50,6 @@ namespace Inventar_Dedicnost
                         pageOfInventory[onPage]();
                         break;
                     case ConsoleKey.DownArrow:
-                        //Console.WriteLine(test[onPage]);
-                        //Console.ReadKey(true);
                         if (highlighted < test[onPage]) 
                             highlighted++; 
                         else 
@@ -70,26 +66,11 @@ namespace Inventar_Dedicnost
                 }
             }   
 
-            /*new Food("Interface", 1, 1, 0, 0, 0).WriteInterface();
-            foodList.Add(new Food("Borůvky", 15, 1, 10, 0, 20));
-            foodList.Add(new Food("Voda", 10, 5, 15, 5, 20));
-            foodList.Add(new Food("Med", 2, 25, 5, 20, 15));
-            foodList.Add(new Food("Léčivá rostlina", 9, 15, 25, 0, 10));
-            foodList.Add(new Food("Léčivá bylina", 4, 30, 50, 0, 10));
-            foodList.Add(new Food("Léčivý kořen", 2, 50, 75, 0, 10));
-            foodList.Add(new Food("Ohnivá kopřivka", 7, 20, 5, 25, 10));
-            foodList.Add(new Food("Ohnivé býlí", 3, 40, 5, 50, 10));
-            foodList.Add(new Food("Ohnivý kořen", 1, 80, 5, 75, 10));
-            foodList.Add(new Food("Polévka z divočáka", 3, 50, 65, 0, 60));
-            foodList.Add(new Food("Rum", 4, 20, -10, 25, 50));
-            foodList.Add(new Food("Lěčivý lektvar", 4, 100, 100, 0, 0));
-            foodList.Add(new Food("Lektvar many", 2, 150, 0, 100, 0));
-            foodList.ForEach(wp => wp.WriteItem());*/
         }
 
         public static void InventoryWeapons()
         {
-            new Weapon("initialize", 1, 1, 0, "close", 0).WriteInterface();
+            new Weapon("Interface", 1, 1, 0, "close", 0).WriteInterface();
             weaponList[highlighted].Highlight = true;
             weaponList.ForEach(w => w.WriteItem());
             weaponList[highlighted].Highlight = false;
