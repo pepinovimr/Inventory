@@ -1,0 +1,24 @@
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.AssemblyReference.cache
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.SuggestedBindingRedirects.cache
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.CoreCompileInputs.cache
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.AssemblyReference.cache
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.SuggestedBindingRedirects.cache
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.CoreCompileInputs.cache
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe.config
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.pdb
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.exe
+D:\Základy Programování - C#\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.pdb
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe.config
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.pdb
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.exe
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.pdb
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe.config
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.pdb
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.AssemblyReference.cache
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.SuggestedBindingRedirects.cache
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.CoreCompileInputs.cache
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.exe
+C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.pdb
