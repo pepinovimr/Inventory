@@ -169,7 +169,7 @@ namespace Inventar_Dedicnost
 
         }
 
-        public static void ErrorDialog(string s)
+        public static void ErrorDialog(string s)                 //Metoda, která vypisuje chybovou hlášku
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(s);
@@ -181,7 +181,7 @@ namespace Inventar_Dedicnost
         //Tuty switche s casema pro každýho potomka jsou dost pain
         //*Příště u takového drobet většího projektu využívat něco ve stylu Factory Pattern
         //A jinak pořešit ty Listy
-        public static void WriteHeaderOnPage()
+        public static void WriteHeaderOnPage()                    //Vypíše Header podle dané stránky
         {
             switch (onPage)
             {
@@ -194,7 +194,7 @@ namespace Inventar_Dedicnost
             }
         }
 
-        public static void AddRandomItem()
+        public static void AddRandomItem()                          //Přidá náhodný Item do kolekce, podle dané stránky
         {
             switch (onPage)
             {
@@ -209,7 +209,7 @@ namespace Inventar_Dedicnost
             }
         }
 
-        public static void FindAndAddElement(Inventory i)
+        public static void FindAndAddElement(Inventory i)         //Pokusí se najít element v kolekci, pokuď tam není - přidá ho, pokuď tam je, zvětší Quantity o 1
         {
             i.WriteItem();
             List<Inventory> l = pageOfInventory[onPage].FindAll(x => x.Name.Contains(i.Name));
