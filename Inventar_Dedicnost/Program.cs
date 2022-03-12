@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 //**Inventář - id, nazev, počet, cena/ks
     //**Zbraně - dmg, typ, potřebná síla/obratnost
     //**Jídlo - lečeni životy, léčení mana
@@ -17,7 +18,7 @@ namespace Inventar_Dedicnost
             { 1, foodList }
         };
         public static int onPage = 0;
-        public static int highlighted = 0;
+        public static int highlightedIndex = 0;
         static void Main(string[] args)
         {
             weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartingItems());
@@ -34,12 +35,12 @@ namespace Inventar_Dedicnost
                         if (onPage < pageOfInventory.Count-1)
                         {
                             onPage++;
-                            highlighted = 0;
+                            highlightedIndex = 0;
                             Initialize(pageOfInventory[onPage]);
                             break;
                         }
                         onPage = 0;
-                        highlighted = 0;
+                        highlightedIndex = 0;
                         Initialize(pageOfInventory[onPage]);
                         break;
 
@@ -47,32 +48,32 @@ namespace Inventar_Dedicnost
                         if (onPage > 0)
                         {
                             onPage--;
-                            highlighted = 0;
+                            highlightedIndex = 0;
                             Initialize(pageOfInventory[onPage]);
                             break;
                         }
                         onPage = pageOfInventory.Count-1;
-                        highlighted = 0; 
+                        highlightedIndex = 0; 
                         Initialize(pageOfInventory[onPage]);
                         break;
 
                     case ConsoleKey.DownArrow:
                         if (pageOfInventory[onPage].Count == 1)
                             break;
-                        if (highlighted < pageOfInventory[onPage].Count - 1) 
-                            highlighted++; 
+                        if (highlightedIndex < pageOfInventory[onPage].Count - 1) 
+                            highlightedIndex++; 
                         else 
-                            highlighted = 0;
+                            highlightedIndex = 0;
                         Initialize(pageOfInventory[onPage]);
                         break;
 
                     case ConsoleKey.UpArrow:
                         if (pageOfInventory[onPage].Count == 1)
                             break;
-                        if (highlighted > 0)
-                            highlighted--;
+                        if (highlightedIndex > 0)
+                            highlightedIndex--;
                         else
-                            highlighted = pageOfInventory[onPage].Count - 1 ;
+                            highlightedIndex = pageOfInventory[onPage].Count - 1 ;
                         Initialize(pageOfInventory[onPage]);
                         break;
                     case ConsoleKey.X:
@@ -98,27 +99,52 @@ namespace Inventar_Dedicnost
                     Inventory.WriteFooter();
                     return;
                 }
-            ListInv[highlighted].WriteHeader();
+            ListInv[highlightedIndex].WriteHeader();
             ListInv.Sort((x, y) => x.Price.CompareTo(y.Price));
-            ListInv[highlighted].Highlight = true;
+            ListInv[highlightedIndex].Highlight = true;
             ListInv.ForEach(wp => wp.WriteItem());
-            ListInv[highlighted].Highlight = false;
+            ListInv[highlightedIndex].Highlight = false;
             Inventory.WriteFooter();
         }
 
         public static void RemoveItem(List<Inventory> rmItem)
         {
-            if(pageOfInventory[onPage][highlighted].Quantity == 1)
-                pageOfInventory[onPage].RemoveAt(highlighted);
+            if(pageOfInventory[onPage][highlightedIndex].Quantity == 1)
+                pageOfInventory[onPage].RemoveAt(highlightedIndex);
             else
             {
-                pageOfInventory[onPage][highlighted].Quantity--;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Kolik kusů chcete vyhodit? :");
+                Console.CursorVisible = true;
+                string sn = Console.ReadLine();
+                Console.CursorVisible = false;
+                if (int.TryParse(sn, out int n))
+                {
+                    if (n < 1)
+                    {
+                        ErrorDialog("Číslo nesmí být menší než 1");
+                        return;
+                    }
+                    if(pageOfInventory[onPage][highlightedIndex].Quantity == n)
+                    {
+                        pageOfInventory[onPage].RemoveAt(highlightedIndex);
+                        return;
+                    }
+
+                    pageOfInventory[onPage][highlightedIndex].Quantity = pageOfInventory[onPage][highlightedIndex].Quantity - n;
+                }
+                else
+                {
+                    ErrorDialog("Nebylo zadáno číslo!");
+                    return;
+
+                }
             }
+
             if (pageOfInventory[onPage].Count > 0)
-                highlighted = -1;
+                highlightedIndex = -1;
             else
             {
-                highlighted = 0;
                 if(pageOfInventory[onPage].Count == 0)
                 {
                     WriteHeaderOnPage();
@@ -126,22 +152,32 @@ namespace Inventar_Dedicnost
                 }
 
             }
-            if (highlighted < 0)
+            if (highlightedIndex < 0)
             {
                 rmItem.ForEach(wp => wp.WriteItem());
-                highlighted = 0;
+                highlightedIndex = 0;
             }
             else
             {
-                rmItem[highlighted].Highlight = true;
+                rmItem[highlightedIndex].Highlight = true;
                 rmItem.ForEach(wp => wp.WriteItem());
-                rmItem[highlighted].Highlight = false;
+                rmItem[highlightedIndex].Highlight = false;
             }
             Inventory.WriteFooter();
 
         }
-        //Tuty switche mimo Main jsou dost pain
-        //*Příště u drobet většího projektu využívat Factory Pattern
+
+        public static void ErrorDialog(string s)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(s);
+            Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(1000);
+            Initialize(pageOfInventory[onPage]);
+        }
+
+        //Tuty switche s casema pro každýho potomka jsou dost pain
+        //*Příště u takového drobet většího projektu využívat něco ve stylu Factory Pattern
         //A jinak pořešit ty Listy
         public static void WriteHeaderOnPage()
         {
