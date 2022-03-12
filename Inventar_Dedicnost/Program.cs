@@ -12,22 +12,22 @@ namespace Inventar_Dedicnost
     {
         public static List<Inventory> weaponList = new List<Inventory>();
         public static List<Inventory> foodList = new List<Inventory>();
-        public static Dictionary<int, List<Inventory>> pageOfInventory = new Dictionary<int, List<Inventory>>()
+        public static Dictionary<int, List<Inventory>> pageOfInventory = new Dictionary<int, List<Inventory>>()         //Slovník s číslem stránky a Kolekcí pro danou stránku
         {
             { 0, weaponList },
             { 1, foodList }
         };
-        public static int onPage = 0;
-        public static int highlightedIndex = 0;
+        public static int onPage = 0;               //Ukazuje na jaké stránce inventáře jsme
+        public static int highlightedIndex = 0;     //Ukazuje index označeného itemu
         static void Main(string[] args)
         {
-            weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartingItems());
+            weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartingItems());                         //Přidá do kolekce startovací věci
             foodList.AddRange(new Food("starting food", 1, 1, 0, 0, 0).StartingItems());
 
             Console.CursorVisible = false;
-            Initialize(pageOfInventory[onPage]);
+            WriteInventory(pageOfInventory[onPage]);
 
-            while (true)
+            while (true)                                                                        //'menu' pro funkcionalitu
             {
                 switch (Console.ReadKey(true).Key)                                              //Parametr - bool zakáže konzoli vypsávat zmáčknuté charaktery
                 {
@@ -36,12 +36,12 @@ namespace Inventar_Dedicnost
                         {
                             onPage++;
                             highlightedIndex = 0;
-                            Initialize(pageOfInventory[onPage]);
+                            WriteInventory(pageOfInventory[onPage]);
                             break;
                         }
                         onPage = 0;
                         highlightedIndex = 0;
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
 
                     case ConsoleKey.LeftArrow:
@@ -49,12 +49,12 @@ namespace Inventar_Dedicnost
                         {
                             onPage--;
                             highlightedIndex = 0;
-                            Initialize(pageOfInventory[onPage]);
+                            WriteInventory(pageOfInventory[onPage]);
                             break;
                         }
                         onPage = pageOfInventory.Count-1;
                         highlightedIndex = 0; 
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
 
                     case ConsoleKey.DownArrow:
@@ -64,7 +64,7 @@ namespace Inventar_Dedicnost
                             highlightedIndex++; 
                         else 
                             highlightedIndex = 0;
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
 
                     case ConsoleKey.UpArrow:
@@ -74,24 +74,24 @@ namespace Inventar_Dedicnost
                             highlightedIndex--;
                         else
                             highlightedIndex = pageOfInventory[onPage].Count - 1 ;
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
                     case ConsoleKey.X:
                         if (pageOfInventory[onPage].Count == 0)
                             break;
                         RemoveItem(pageOfInventory[onPage]);
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
                     case ConsoleKey.E:
                         AddRandomItem();
-                        Initialize(pageOfInventory[onPage]);
+                        WriteInventory(pageOfInventory[onPage]);
                         break;
                 }
             }
 
         }
 
-        public static void Initialize(List<Inventory> ListInv)
+        public static void WriteInventory(List<Inventory> ListInv)                              //Vypisuje vše na obrazovce
         {
             if (pageOfInventory[onPage].Count == 0)
                 {
@@ -107,31 +107,32 @@ namespace Inventar_Dedicnost
             Inventory.WriteFooter();
         }
 
-        public static void RemoveItem(List<Inventory> rmItem)
+        public static void RemoveItem(List<Inventory> rmItem)                                   //Odstraňuje označený item
         {
-            if(pageOfInventory[onPage][highlightedIndex].Quantity == 1)
+
+            if(pageOfInventory[onPage][highlightedIndex].Quantity == 1)                         //Pokud je quantity u označeného itemu jedna, rovnou jej odstraní
                 pageOfInventory[onPage].RemoveAt(highlightedIndex);
             else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Kolik kusů chcete vyhodit? :");
                 Console.CursorVisible = true;
-                string sn = Console.ReadLine();
+                string sn = Console.ReadLine();                                                     //Pro možnost vyhození určitého počtu itemů
                 Console.CursorVisible = false;
-                if (int.TryParse(sn, out int n))
+                if (int.TryParse(sn, out int n))                                                    //Ošetření vyjimek - nezadnáno číslo
                 {
-                    if (n < 1)
+                    if (n < 1)                                                                      //Ošetření vyjimek - číslo není kladné
                     {
                         ErrorDialog("Číslo nesmí být menší než 1");
                         return;
                     }
-                    if(pageOfInventory[onPage][highlightedIndex].Quantity == n)
+                    if(pageOfInventory[onPage][highlightedIndex].Quantity == n || pageOfInventory[onPage][highlightedIndex].Quantity <= n)  //vyhodí item pryč, pokud je zadané číslo stejné, nebo větší, než quantity
                     {
                         pageOfInventory[onPage].RemoveAt(highlightedIndex);
                         return;
                     }
 
-                    pageOfInventory[onPage][highlightedIndex].Quantity = pageOfInventory[onPage][highlightedIndex].Quantity - n;
+                    pageOfInventory[onPage][highlightedIndex].Quantity = pageOfInventory[onPage][highlightedIndex].Quantity - n;            //pouze sníží quantity o daný počet
                 }
                 else
                 {
@@ -142,16 +143,17 @@ namespace Inventar_Dedicnost
             }
 
             if (pageOfInventory[onPage].Count > 0)
-                highlightedIndex = -1;
+              highlightedIndex = -1;
             else
             {
-                if(pageOfInventory[onPage].Count == 0)
+                if(pageOfInventory[onPage].Count == 0)          //Ošetření, aby se program nestanižil vypisovat Itemy, když žádné v kolekci nejsou
                 {
                     WriteHeaderOnPage();
                     return;
                 }
 
             }
+
             if (highlightedIndex < 0)
             {
                 rmItem.ForEach(wp => wp.WriteItem());
@@ -173,7 +175,7 @@ namespace Inventar_Dedicnost
             Console.WriteLine(s);
             Console.ForegroundColor = ConsoleColor.White;
             Thread.Sleep(1000);
-            Initialize(pageOfInventory[onPage]);
+            WriteInventory(pageOfInventory[onPage]);
         }
 
         //Tuty switche s casema pro každýho potomka jsou dost pain

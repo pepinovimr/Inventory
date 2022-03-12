@@ -13,7 +13,7 @@ namespace Inventar_Dedicnost
         protected int[] posX = { 20, 32, 44, 65, 81 };
         public static Random rnd = new Random();
 
-        public virtual void WriteHeader()
+        public virtual void WriteHeader()                                                       //Napíše hlavičku inventáře
         {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
@@ -30,7 +30,7 @@ namespace Inventar_Dedicnost
             Console.Write("Cena");
         }
 
-        public static void WriteFooter()
+        public static void WriteFooter()                                                          //Napíše patičku inventáře
         {
             Console.SetCursorPosition(0, Console.CursorTop + 2);
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -38,7 +38,7 @@ namespace Inventar_Dedicnost
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public virtual void WriteItem()
+        public virtual void WriteItem()                                                            //Vypíše item na konzoli
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
