@@ -5,9 +5,9 @@ namespace Inventar_Dedicnost
     //Inventář - nazev, počet, cena/ks
     internal class Inventory
     {
-        protected string Name { set; get; }
-        protected int Quantity { set; get; }
-        protected int Price { set; get; }
+        public string Name { set; get; }
+        public int Quantity { set; get; }
+        public int Price { set; get; }
         protected string PageOfInv { set; get; }
         public bool Highlight { get; set; } = false;
         protected int[] posX = { 20, 32, 44, 65, 81 };
@@ -50,13 +50,6 @@ namespace Inventar_Dedicnost
             Console.SetCursorPosition(posX[1], Console.CursorTop);
             Console.Write(Price);
         }
-
-        public virtual List<Inventory> StartingItems()
-        {
-            List<Inventory> start = new List<Inventory>();
-            return start;
-        }
-
 
         public Inventory(string name, int count, int price, bool highlight)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 //Jídlo - lečeni životy, léčení mana, Léčení stamina
 namespace Inventar_Dedicnost
 {
-    internal class Food:Inventory
+    internal class Food : Inventory
     {
         public int AddHP { get; set; }
         public int AddMP { get; set; }
@@ -16,6 +16,7 @@ namespace Inventar_Dedicnost
             this.AddMP = addMP;
         }
 
+        //Tuty metody příště asi dělat přes Interface
         public override void WriteHeader()
         {
             PageOfInv = "Jídlo";
@@ -39,11 +40,11 @@ namespace Inventar_Dedicnost
             Console.Write(AddMP);
         }
 
-        public List<Food> AllFood()
+        public List<Food> AllItems()
         {
             List<Food> allFd = new List<Food>
             {
-            new Food("Borůvky", 2, 1, 10, 0, 20),
+            new Food("Borůvky", 1, 1, 10, 0, 20),
             new Food("Voda", 1, 5, 15, 5, 20),
             new Food("Med", 1, 25, 5, 20, 15),
             new Food("Léčivá rostlina", 1, 15, 25, 0, 10),
@@ -60,22 +61,22 @@ namespace Inventar_Dedicnost
             return allFd;
         }
 
-        public Food RandomFood()
+        public Food RandomItem()
         {
-            return AllFood()[rnd.Next(AllFood().Count)];
+            return AllItems()[rnd.Next(AllItems().Count)];
         }
-        public override List<Inventory> StartingItems()
+        public List<Inventory> StartingItems()
         {
             List<Inventory> start = new List<Inventory>();
             if (rnd.Next(10) == 5)
-                start.Add(AllFood()[1]);
+                start.Add(AllItems()[1]);
             else
-                start.Add(AllFood()[0]);
+                start.Add(AllItems()[0]);
 
             if (rnd.Next(10) == 3)
-                start.Add(AllFood()[6]);
+                start.Add(AllItems()[6]);
             else
-                start.Add(AllFood()[2]);
+                start.Add(AllItems()[2]);
 
             return start;
         }

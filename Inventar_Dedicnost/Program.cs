@@ -22,6 +22,7 @@ namespace Inventar_Dedicnost
         {
             weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartingItems());
             foodList.AddRange(new Food("starting food", 1, 1, 0, 0, 0).StartingItems());
+
             Console.CursorVisible = false;
             Initialize(pageOfInventory[onPage]);
 
@@ -80,6 +81,10 @@ namespace Inventar_Dedicnost
                         RemoveItem(pageOfInventory[onPage]);
                         Initialize(pageOfInventory[onPage]);
                         break;
+                    case ConsoleKey.E:
+                        AddRandomItem();
+                        Initialize(pageOfInventory[onPage]);
+                        break;
                 }
             }
 
@@ -94,6 +99,7 @@ namespace Inventar_Dedicnost
                     return;
                 }
             ListInv[highlighted].WriteHeader();
+            ListInv.Sort((x, y) => x.Price.CompareTo(y.Price));
             ListInv[highlighted].Highlight = true;
             ListInv.ForEach(wp => wp.WriteItem());
             ListInv[highlighted].Highlight = false;
@@ -102,7 +108,12 @@ namespace Inventar_Dedicnost
 
         public static void RemoveItem(List<Inventory> rmItem)
         {
-            pageOfInventory[onPage].RemoveAt(highlighted);
+            if(pageOfInventory[onPage][highlighted].Quantity == 1)
+                pageOfInventory[onPage].RemoveAt(highlighted);
+            else
+            {
+                pageOfInventory[onPage][highlighted].Quantity--;
+            }
             if (pageOfInventory[onPage].Count > 0)
                 highlighted = -1;
             else
@@ -129,7 +140,9 @@ namespace Inventar_Dedicnost
             Inventory.WriteFooter();
 
         }
-
+        //Tuty switche mimo Main jsou dost pain
+        //*Příště u drobet většího projektu využívat Factory Pattern
+        //A jinak pořešit ty Listy
         public static void WriteHeaderOnPage()
         {
             switch (onPage)
@@ -141,6 +154,33 @@ namespace Inventar_Dedicnost
                     new Food("Header", 0, 0, 0, 0, 0).WriteHeader();
                     break;
             }
+        }
+
+        public static void AddRandomItem()
+        {
+            switch (onPage)
+            {
+                case 0:
+                    Weapon w = new Weapon("Header", 0, 0, 0, "close", 0).RandomItem();
+                    FindAndAddElement(w);
+                    break;
+                case 1:
+                    Food f = (new Food("Header", 0, 0, 0, 0, 0).RandomItem());
+                    FindAndAddElement(f);
+                    break;
+            }
+        }
+
+        public static void FindAndAddElement(Inventory i)
+        {
+            i.WriteItem();
+            List<Inventory> l = pageOfInventory[onPage].FindAll(x => x.Name.Contains(i.Name));
+            if (l.Count != 0)
+            {
+                i.Quantity = l[0].Quantity + 1;
+                pageOfInventory[onPage].Remove(l[0]);
+            }
+            pageOfInventory[onPage].Add(i);
         }
 
     }

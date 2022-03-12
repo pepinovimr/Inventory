@@ -17,6 +17,8 @@ namespace Inventar_Dedicnost
             this.AttributeNeeded = attributeNeeded;
 
         }
+
+        //Tuty metody příště asi dělat přes Interface
         public override void WriteHeader()
         {
             PageOfInv = "Zbraně";
@@ -45,7 +47,7 @@ namespace Inventar_Dedicnost
             else if (Type == "range")
                 Console.Write(" obratnost");
         }
-        public List<Weapon> AllWeapon()
+        public List<Weapon> AllItems()
         {
             List<Weapon> allWp = new List<Weapon>
             {
@@ -65,23 +67,23 @@ namespace Inventar_Dedicnost
             return allWp;
         }
 
-        public Weapon RandomWeapon()
+        public Weapon RandomItem()
         {
-            return AllWeapon()[rnd.Next(AllWeapon().Count)];
+            return AllItems()[rnd.Next(AllItems().Count)];
         }
 
-        public override List<Inventory> StartingItems()
+        public List<Inventory> StartingItems()
         {
             List<Inventory> start = new List<Inventory>();
             if (rnd.Next(10) == 5)
-                start.Add(AllWeapon()[1]);
+                start.Add(AllItems()[1]);
             else
-                start.Add(AllWeapon()[0]);
+                start.Add(AllItems()[0]);
 
             if (rnd.Next(10) == 3)
-                start.Add(AllWeapon()[7]);
+                start.Add(AllItems()[7]);
             else
-                start.Add(AllWeapon()[6]);
+                start.Add(AllItems()[6]);
 
             return start;
         }
