@@ -6,6 +6,11 @@ using System.Threading;
     //**Jídlo - lečeni životy, léčení mana
 //Na výpis udělat celou stránku, kde by se pohybovalo šipkama, pak třeba možnost, něco vyhodit, něco přibrat atd.. 
 //Další možní potomci - Cenosti, Magie, Šperky, Zbroje.
+
+//Celkově jsem po napsání většiny programu zjistil, že je dost špatně navržený, spousta věcí by mělo mít vlastní classy, pro jednotlivé druhy předmětů příště udělat interface atd...
+//Všechno to vychází z toho, že jsem si přidával věci co udělat během psaní kódu.
+//Už to nestíhám předělat, tak aby se mi to líbilo.
+//Každopádně na ukázku dědičnosti (a toho jak nemá být navržený program) to asi bohatě stačí.
 namespace Inventar_Dedicnost
 {
     internal class Program
@@ -17,11 +22,12 @@ namespace Inventar_Dedicnost
             { 0, weaponList },
             { 1, foodList }
         };
+        public static PlayerStats player = new PlayerStats();
         public static int onPage = 0;               //Ukazuje na jaké stránce inventáře jsme
         public static int highlightedIndex = 0;     //Ukazuje index označeného itemu
         static void Main(string[] args)
         {
-            weaponList.AddRange(new Weapon("initialize", 1, 1, 0, "close", 0).StartingItems());                         //Přidá do kolekce startovací věci
+            weaponList.AddRange(new Weapon("starting weapons", 1, 1, 0, "close", 0).StartingItems());                         //Přidá do kolekce startovací věci
             foodList.AddRange(new Food("starting food", 1, 1, 0, 0, 0).StartingItems());
 
             Console.CursorVisible = false;
@@ -86,6 +92,10 @@ namespace Inventar_Dedicnost
                         AddRandomItem();
                         WriteInventory(pageOfInventory[onPage]);
                         break;
+                    case ConsoleKey.Q:
+                        Use();
+                        WriteInventory(pageOfInventory[onPage]);
+                        break;
                 }
             }
 
@@ -107,7 +117,7 @@ namespace Inventar_Dedicnost
             Inventory.WriteFooter();
         }
 
-        public static void RemoveItem(List<Inventory> rmItem)                                   //Odstraňuje označený item
+        public static void RemoveItem(List<Inventory> rmItem)                                   //Odstraňuje označený item - příště by mohlo být ve vlastní třídě
         {
 
             if(pageOfInventory[onPage][highlightedIndex].Quantity == 1)                         //Pokud je quantity u označeného itemu jedna, rovnou jej odstraní
@@ -126,9 +136,15 @@ namespace Inventar_Dedicnost
                         ErrorDialog("Číslo nesmí být menší než 1");
                         return;
                     }
-                    if(pageOfInventory[onPage][highlightedIndex].Quantity == n || pageOfInventory[onPage][highlightedIndex].Quantity <= n)  //vyhodí item pryč, pokud je zadané číslo stejné, nebo větší, než quantity
+                    if(pageOfInventory[onPage][highlightedIndex].Quantity == n)  //vyhodí item pryč, pokud je zadané číslo stejné, jako quantity
                     {
                         pageOfInventory[onPage].RemoveAt(highlightedIndex);
+                        return;
+                    }
+                    if(pageOfInventory[onPage][highlightedIndex].Quantity <= n)
+                    {
+                        pageOfInventory[onPage].RemoveAt(highlightedIndex);
+                        highlightedIndex--;
                         return;
                     }
 
@@ -146,7 +162,7 @@ namespace Inventar_Dedicnost
               highlightedIndex = -1;
             else
             {
-                if(pageOfInventory[onPage].Count == 0)          //Ošetření, aby se program nestanižil vypisovat Itemy, když žádné v kolekci nejsou
+                if(pageOfInventory[onPage].Count == 0)          //Ošetření, aby se program nesnanžil vypisovat Itemy, když žádné v kolekci nejsou
                 {
                     WriteHeaderOnPage();
                     return;
@@ -168,6 +184,30 @@ namespace Inventar_Dedicnost
             Inventory.WriteFooter();
 
         }
+        public static void Use()
+        {
+            if (pageOfInventory[onPage].Count <= 0)
+                return;
+            switch (onPage)
+            {
+                case 0:
+                    pageOfInventory[onPage].ForEach(x => { if (x.Equiped == true) x.Equiped = false;});                //Zjišťuje jestli je v Listu už jeden Equipnutý Item, pokud ano, tak ho odznačí, aby nemohli být equipnuty 2 a více
+                    pageOfInventory[onPage][highlightedIndex].Equiped = true;
+                    Weapon w = (Weapon) pageOfInventory[onPage][highlightedIndex];
+                    PlayerStats.PlayerDmg = w.Dmg;
+                    break;
+                case 1:
+                    Food f = (Food) pageOfInventory[onPage][highlightedIndex];
+                    PlayerStats.EatFood(f);
+                    pageOfInventory[onPage][highlightedIndex].Quantity--;
+                    if (pageOfInventory[onPage][highlightedIndex].Quantity <= 0)
+                    {
+                        pageOfInventory[onPage].RemoveAt(highlightedIndex);
+                        highlightedIndex--;
+                    }
+                    break;
+            }
+        }
 
         public static void ErrorDialog(string s)                 //Metoda, která vypisuje chybovou hlášku
         {
@@ -177,11 +217,7 @@ namespace Inventar_Dedicnost
             Thread.Sleep(1000);
             WriteInventory(pageOfInventory[onPage]);
         }
-
-        //Tuty switche s casema pro každýho potomka jsou dost pain
-        //*Příště u takového drobet většího projektu využívat něco ve stylu Factory Pattern
-        //A jinak pořešit ty Listy
-        public static void WriteHeaderOnPage()                    //Vypíše Header podle dané stránky
+        public static void WriteHeaderOnPage()                    //Vypíše Header podle dané stránky - příště by asi měla být jínde
         {
             switch (onPage)
             {
@@ -194,7 +230,7 @@ namespace Inventar_Dedicnost
             }
         }
 
-        public static void AddRandomItem()                          //Přidá náhodný Item do kolekce, podle dané stránky
+        public static void AddRandomItem()                          //Přidá náhodný Item do kolekce, podle dané stránky - asi špatně navržený, příště by mělo být jinde 
         {
             switch (onPage)
             {

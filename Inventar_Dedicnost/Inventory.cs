@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 namespace Inventar_Dedicnost
 {
     //Inventář - nazev, počet, cena/ks
@@ -10,6 +9,7 @@ namespace Inventar_Dedicnost
         public int Price { set; get; }
         protected string PageOfInv { set; get; }
         public bool Highlight { get; set; } = false;
+        public bool Equiped { get; set; } = false;
         protected int[] posX = { 20, 32, 44, 65, 81 };
         public static Random rnd = new Random();
 
@@ -36,14 +36,22 @@ namespace Inventar_Dedicnost
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Použít - Q               Vyhodit - X             Najít náhodný předmět - E");
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\nStatistika postavy:");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Životy: {0}%    Mana: {1}%     Výdrž: {2}%       Síla: {3}       Obratnost: {4}       Poškození: {5}",PlayerStats.HP, PlayerStats.MP, PlayerStats.ST, PlayerStats.Str, PlayerStats.Dex, PlayerStats.PlayerDmg);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public virtual void WriteItem()                                                            //Vypíše item na konzoli
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
-            if (Highlight)
+            if (Equiped && Highlight)
+                Console.ForegroundColor = ConsoleColor.Magenta;
+            else if (Highlight)
                 Console.ForegroundColor = ConsoleColor.Green;
+            else if (Equiped)
+                Console.ForegroundColor = ConsoleColor.Blue;
             Console.Write(Name);
             Console.SetCursorPosition(posX[0], Console.CursorTop);
             Console.Write(Quantity);
@@ -51,12 +59,13 @@ namespace Inventar_Dedicnost
             Console.Write(Price);
         }
 
-        public Inventory(string name, int count, int price, bool highlight)
+        public Inventory(string name, int count, int price, bool highlight, bool equiped)
         {
-            this.Name = name;
-            this.Quantity = count;
-            this.Price = price;
-            this.Highlight = highlight;
+            Name = name;
+            Quantity = count;
+            Price = price;
+            Highlight = highlight;
+            Equiped = equiped;
         }
     }
 }

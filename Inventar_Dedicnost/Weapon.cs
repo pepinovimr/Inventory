@@ -6,15 +6,15 @@ namespace Inventar_Dedicnost
     //Zbraně - dmg, typ, potřebná síla/obratnost
     internal class Weapon : Inventory
     {
-        protected byte Dmg;
-        protected string Type;
+        public byte Dmg { get; set; }
+        public string Type { get; set; }
         protected int AttributeNeeded;
         public Weapon(string name, int count, int price, byte dmg, string type, int attributeNeeded) :
-            base(name, count, price, false)
+            base(name, count, price, false, false)
         {
-            this.Dmg = dmg;
-            this.Type = type;
-            this.AttributeNeeded = attributeNeeded;
+            Dmg = dmg;
+            Type = type;
+            AttributeNeeded = attributeNeeded;
 
         }
 
@@ -46,6 +46,13 @@ namespace Inventar_Dedicnost
                 Console.Write(" síla");
             else if (Type == "range")
                 Console.Write(" obratnost");
+        }
+
+        public static Weapon GetEquipedWeapon(List<Weapon> WpList)
+        {
+            Weapon w = null;
+            WpList.ForEach(x => { if (x.Equiped == true) w = x; });
+            return w;
         }
         public List<Weapon> AllItems()
         {

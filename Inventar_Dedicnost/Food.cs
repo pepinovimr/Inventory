@@ -9,11 +9,11 @@ namespace Inventar_Dedicnost
         public int AddMP { get; set; }
         public int AddST { get; set; }
         public Food(string name, int count, int price, int addHP, int addMP, int addST) :
-            base(name, count, price, false)
+            base(name, count, price, false, false)
         {
-            this.AddHP = addHP;
-            this.AddST = addST;
-            this.AddMP = addMP;
+            AddHP = addHP;
+            AddST = addST;
+            AddMP = addMP;
         }
 
         //Tuty metody příště asi dělat přes Interface
