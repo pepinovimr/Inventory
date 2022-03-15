@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
+
 //**Inventář - id, nazev, počet, cena/ks
     //**Zbraně - dmg, typ, potřebná síla/obratnost
     //**Jídlo - lečeni životy, léčení mana
@@ -22,19 +24,26 @@ namespace Inventar_Dedicnost
             { 0, weaponList },
             { 1, foodList }
         };
-        public static PlayerStats player = new PlayerStats();
         public static int onPage = 0;               //Ukazuje na jaké stránce inventáře jsme
         public static int highlightedIndex = 0;     //Ukazuje index označeného itemu
+        public static Random rnd = new Random();
         static void Main(string[] args)
         {
             weaponList.AddRange(new Weapon("starting weapons", 1, 1, 0, "close", 0).StartingItems());                         //Přidá do kolekce startovací věci
             foodList.AddRange(new Food("starting food", 1, 1, 0, 0, 0).StartingItems());
+            PlayerStats player = new PlayerStats();
 
             Console.CursorVisible = false;
             WriteInventory(pageOfInventory[onPage]);
 
             while (true)                                                                        //'menu' pro funkcionalitu
             {
+                if (PlayerStats.HP <= 0)
+                {
+                    Console.Clear();
+                    ErrorDialog("Umřel jste! \nKONEC HRY\n");
+                    return;
+                }
                 switch (Console.ReadKey(true).Key)                                              //Parametr - bool zakáže konzoli vypsávat zmáčknuté charaktery
                 {
                     case ConsoleKey.RightArrow:
@@ -89,7 +98,14 @@ namespace Inventar_Dedicnost
                         WriteInventory(pageOfInventory[onPage]);
                         break;
                     case ConsoleKey.E:
+                        PlayerStats.AddRandomAttributes();
                         AddRandomItem();
+                        if (PlayerStats.ST < 0)
+                        {
+                            int a = 0 + PlayerStats.ST;
+                            PlayerStats.HP += a;
+                            PlayerStats.ST = 0;
+                        }
                         WriteInventory(pageOfInventory[onPage]);
                         break;
                     case ConsoleKey.Q:
@@ -110,7 +126,8 @@ namespace Inventar_Dedicnost
                     return;
                 }
             ListInv[highlightedIndex].WriteHeader();
-            ListInv.Sort((x, y) => x.Price.CompareTo(y.Price));
+            //ListInv.Sort((x, y) => { x.Name.CompareTo(y.Name).Where(); else x.Price.CompareTo(y.Price); });
+            ListInv.OrderByDescending(x => x.Price).ThenBy(x => x.Name);
             ListInv[highlightedIndex].Highlight = true;
             ListInv.ForEach(wp => wp.WriteItem());
             ListInv[highlightedIndex].Highlight = false;
@@ -191,9 +208,14 @@ namespace Inventar_Dedicnost
             switch (onPage)
             {
                 case 0:
-                    pageOfInventory[onPage].ForEach(x => { if (x.Equiped == true) x.Equiped = false;});                //Zjišťuje jestli je v Listu už jeden Equipnutý Item, pokud ano, tak ho odznačí, aby nemohli být equipnuty 2 a více
+                    Weapon w = (Weapon)pageOfInventory[onPage][highlightedIndex];
+                    if ((w.Type == "close" && w.AttributeNeeded > PlayerStats.Str) || (w.Type == "range" && w.AttributeNeeded > PlayerStats.Dex))
+                    {
+                        ErrorDialog("Nemáte požadované atributy pro nasazení tohoto předmětu!");
+                        return;
+                    }
+                    pageOfInventory[onPage].ForEach(x => {if (x.Equiped == true) x.Equiped = false;});                //Zjišťuje jestli je v Listu už jeden Equipnutý Item, pokud ano, tak ho odznačí, aby nemohli být equipnuty 2 a více
                     pageOfInventory[onPage][highlightedIndex].Equiped = true;
-                    Weapon w = (Weapon) pageOfInventory[onPage][highlightedIndex];
                     PlayerStats.PlayerDmg = w.Dmg;
                     break;
                 case 1:
@@ -232,6 +254,8 @@ namespace Inventar_Dedicnost
 
         public static void AddRandomItem()                          //Přidá náhodný Item do kolekce, podle dané stránky - asi špatně navržený, příště by mělo být jinde 
         {
+            PlayerStats.HP -= rnd.Next(1, 6);
+            PlayerStats.ST -= rnd.Next(2, 10);
             switch (onPage)
             {
                 case 0:

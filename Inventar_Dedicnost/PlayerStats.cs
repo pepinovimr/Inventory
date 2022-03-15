@@ -10,6 +10,7 @@ namespace Inventar_Dedicnost
         public static int MP { get; set; }
         public static int ST { get; set; }
         public static int PlayerDmg { get; set; }
+        public static Random rnd = new Random();
 
         public PlayerStats()
         {
@@ -23,15 +24,26 @@ namespace Inventar_Dedicnost
 
         public static void EatFood(Food f)
         {
-            HP = HP + f.AddHP;
-            MP = MP + f.AddMP;
-            ST = ST + f.AddST;
+            HP += f.AddHP;
+            MP += f.AddMP;
+            ST += f.AddST;
             if (HP > 100)
                 HP = 100;
             if (MP > 100)
                 MP = 100;
             if (ST > 100)
                 ST = 100;
+        }
+
+        public static void AddRandomAttributes()
+        {
+            Dex += rnd.Next(1, 6);
+            Str += rnd.Next(1, 6);
+
+            if (Dex > 100)
+                Dex = 100;
+            if (Str > 100)
+                Str = 100;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Inventar_Dedicnost
     {
         public byte Dmg { get; set; }
         public string Type { get; set; }
-        protected int AttributeNeeded;
+        public int AttributeNeeded;
         public Weapon(string name, int count, int price, byte dmg, string type, int attributeNeeded) :
             base(name, count, price, false, false)
         {

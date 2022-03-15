@@ -22,3 +22,11 @@ C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_De
 C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.CoreCompileInputs.cache
 C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.exe
 C:\Users\uzivatel 1\Desktop\C# Projekty\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.pdb
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe.config
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.exe
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\bin\Debug\Inventar_Dedicnost.pdb
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.AssemblyReference.cache
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.SuggestedBindingRedirects.cache
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.csproj.CoreCompileInputs.cache
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.exe
+C:\Users\vimrj\Desktop\Inventar_Dedicnost\Inventory\Inventar_Dedicnost\obj\Debug\Inventar_Dedicnost.pdb
